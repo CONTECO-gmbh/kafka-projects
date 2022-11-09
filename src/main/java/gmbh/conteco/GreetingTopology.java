@@ -11,11 +11,11 @@ public class GreetingTopology {
         StreamsBuilder builder = new StreamsBuilder();
 
                         // input topic
-        builder.stream("persons", Consumed.with(Serdes.Void(), Serdes.String()))
+        builder.stream("persons", Consumed.with(Serdes.String(), Serdes.String()))
                 .filterNot((key, value) -> value.equals("Jim"))
                 .mapValues(value -> "Hallo " + value)
                      // output topic
-                .to("greetings", Produced.with(Serdes.Void(), Serdes.String()));
+                .to("greetings", Produced.with(Serdes.String(), Serdes.String()));
 
         return builder.build();
     }
